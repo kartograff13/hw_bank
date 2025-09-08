@@ -1,4 +1,5 @@
 from src.masks import get_mask_account, get_mask_card_number
+from datetime import datetime
 
 
 def mask_account_card(account_info: str) -> str:
@@ -22,5 +23,15 @@ def mask_account_card(account_info: str) -> str:
         return "Вы ввели не существующий номер карты либо счёта."
 
 
+def get_date(date_str: str) -> str:
+    """Функция, которая возвращает строку с датой в формате 'ДД.ММ.ГГГГ'"""
+    try:
+        transform_date = datetime.fromisoformat(date_str)
+        return transform_date.strftime("%d.%m.%Y")
+    except ValueError:
+        return "Неверный ввод даты"
+
+
 if __name__ == "__main__":
     print(mask_account_card(input("Введите номер своей карты либо счёта: ")))
+    print(get_date(input("Введите дату в формате (2024-03-11T02:26:18.671407): ")))
