@@ -2,7 +2,7 @@ from src.masks import get_mask_account, get_mask_card_number
 
 
 def mask_account_card(account_info: str) -> str:
-    """Функция обработки информации карт"""
+    """Функция обработки информации карт и счетов"""
     account_info = account_info.strip()
     type_of_account = ""
     card_number = ""
