@@ -28,8 +28,36 @@ def sample_dates() -> list[dict]:
         {"date": "2023-01-15T10:30:00", "id": 1},
         {"date": "2023-03-20T14:45:00", "id": 2},
         {"date": "2023-02-10T08:15:00", "id": 3},
-        {"date": "invalid-date-format", "id": 4},
+    ]
+
+
+@pytest.fixture
+def sample_dates_unsorted() -> list[dict]:
+    """Фикстура с неотсортированными данными для тестирования сортировки."""
+    return [
+        {"date": "2023-03-20T14:45:00", "id": 1},
+        {"date": "2023-01-15T10:30:00", "id": 2},
+        {"date": "2023-02-10T08:15:00", "id": 3},
+    ]
+
+
+@pytest.fixture
+def sample_invalid_dates() -> list[dict]:
+    """Фикстура с данными с некорректным форматом даты."""
+    return [
+        {"date": "2023-01-15T10:30:00", "id": 1},
+        {"date": "invalid-date-format", "id": 2},
+        {"date": "2023-02-10T08:15:00", "id": 3},
+    ]
+
+
+@pytest.fixture
+def sample_missing_key() -> list[dict]:
+    """Фикстура с данными с отсутствующим ключом 'date'."""
+    return [
+        {"date": "2023-01-15T10:30:00", "id": 1},
         {"id": 2},
+        {"date": "2023-02-10T08:15:00", "id": 3},
     ]
 
 
