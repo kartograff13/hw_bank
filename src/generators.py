@@ -6,3 +6,8 @@ def filter_by_currency(transactions: list[dict], currency: str) -> Iterator[dict
     for transaction in transactions:
         if transaction["operationAmount"]["currency"]["code"] == currency:
             yield transaction
+
+
+def transaction_descriptions(transactions: list[dict]) -> Iterator[dict]:
+    for transaction in transactions:
+        yield transaction["description"]
