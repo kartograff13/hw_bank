@@ -37,6 +37,7 @@ def log(filename: Optional[str] = None) -> Callable[[Callable[..., Any]], Callab
                         f.write(error_info)
                 else:
                     print(error_info, end="")
+                raise
 
         return wrapper
 
