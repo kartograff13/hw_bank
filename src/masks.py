@@ -12,8 +12,3 @@ def get_mask_account(account_number: str) -> str:
     if account_number.isdigit() and len(account_number) == 20:
         return f"**{account_number[-4:]}"
     return "Вы ввели не существующий номер счёта."
-
-
-if __name__ == "__main__":
-    print(get_mask_card_number(input("Введите номер своей карты: ")))
-    print(get_mask_account(input("Введите номер своего счёта: ")))
