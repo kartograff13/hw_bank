@@ -1,15 +1,15 @@
 import os
+from typing import Any
+
 import requests
 from dotenv import load_dotenv
 
 load_dotenv()
-api_key = os.getenv('API_KEY')
+api_key = os.getenv("API_KEY")
 
 
-def get_amount_rub(transaction):
+def get_amount_rub(transaction: dict[str, Any]) -> float:
     """Функция конвертирует сумму транзакции в рубли"""
-    if not isinstance(transaction, dict):
-        raise ValueError("Транзакция должна быть словарем")
 
     if "amount" not in transaction or "currency" not in transaction:
         raise ValueError("Транзакция должна содержать 'amount' и 'currency'")
@@ -36,16 +36,16 @@ def get_amount_rub(transaction):
             response.raise_for_status()
             data = response.json()
 
-            if not data.get('success', True):
-                error_info = data.get('error', {}).get("info", "Неизвестная ошибка API")
+            if not data.get("success", True):
+                error_info = data.get("error", {}).get("info", "Неизвестная ошибка API")
 
                 raise Exception(f"Ошибка в ответе API: {error_info}")
 
-            if 'rates' not in data or "RUB" not in data["rates"]:
+            if "rates" not in data or "RUB" not in data["rates"]:
                 raise Exception("В ответе API отсутствует курс RUB")
 
             rate = data["rates"]["RUB"]
-            return amount * rate
+            return float(amount * rate)
 
         except requests.exceptions.RequestException as e:
             raise Exception(f"Ошибка при запросе к API: {e}")
