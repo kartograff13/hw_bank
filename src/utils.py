@@ -3,15 +3,16 @@ import os
 from typing import Any
 
 
-def load_transactions_file(file_path: str) -> list[dict[str, Any]]:
+def load_transactions_file() -> list[dict[str, Any]]:
     """Функция загружает файл транзакций из JSON-файла.
-
-    Args:
-        file_path: Путь к JSON-файлу с транзакциями
 
     Returns:
         List[Dict[str, Any]]: Список словарей с транзакциями или пустой список
     """
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    project_root = os.path.dirname(current_dir)
+    file_path = os.path.join(project_root, 'data', 'operations.json')
+
     try:
         if not os.path.exists(file_path) or os.path.getsize(file_path) == 0:
             return []
