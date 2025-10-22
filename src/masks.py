@@ -1,12 +1,16 @@
 import logging
 import os
 
-if not os.path.exists("logs"):
-    os.makedirs("logs")
+
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+LOGS_DIR = os.path.join(PROJECT_ROOT, "logs")
+
+if not os.path.exists(LOGS_DIR):
+    os.makedirs(LOGS_DIR)
 
 logger_card = logging.getLogger("card_number_logger")
 logger_card.setLevel(logging.INFO)
-card_handler = logging.FileHandler("logs/card_number_logger.log", mode="w", encoding="utf-8")
+card_handler = logging.FileHandler(os.path.join(LOGS_DIR, "card_number_logger.log"), mode="w", encoding="utf-8")
 card_formatter = logging.Formatter(
     "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
     datefmt="%d-%m-%Y %H:%M:%S"
@@ -16,7 +20,7 @@ logger_card.addHandler(card_handler)
 
 logger_account = logging.getLogger("account_number_logger")
 logger_account.setLevel(logging.INFO)
-account_handler = logging.FileHandler("logs/account_number_logger.log", mode="w", encoding="utf-8")
+account_handler = logging.FileHandler(os.path.join(LOGS_DIR, "account_number_logger.log"), mode="w", encoding="utf-8")
 account_formatter = logging.Formatter(
     "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
     datefmt="%d-%m-%Y %H:%M:%S"
