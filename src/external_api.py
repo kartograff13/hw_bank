@@ -11,15 +11,30 @@ api_key = os.getenv("API_KEY")
 def get_amount_rub(transaction: dict[str, Any]) -> float:
     """Функция конвертирует сумму транзакции в рубли"""
 
-    if "amount" not in transaction or "currency" not in transaction:
-        raise ValueError("Транзакция должна содержать 'amount' и 'currency'")
+    if "operationAmount" in transaction:
+        operation_amount = transaction["operationAmount"]
+        amount_str = operation_amount.get("amount")
+        currency_info = operation_amount.get("currency", {})
+    else:
+        amount_str = transaction.get("amount")
+        currency_info = (
+            transaction.get("currency", {})
+            if "currency" in transaction
+            else {"code": transaction.get("currency_code", "RUB")}
+        )
+
+    if amount_str is None:
+        raise ValueError("Транзакция должна содержать 'amount'")
 
     try:
-        amount = float(transaction["amount"])
+        amount = float(amount_str)
     except (TypeError, ValueError):
         raise ValueError("Сумма транзакции должна быть числом")
 
-    currency = str(transaction["currency"]).upper()
+    if isinstance(currency_info, dict):
+        currency = str(currency_info.get("code", "RUB")).upper()
+    else:
+        currency = str(currency_info).upper()
 
     if currency == "RUB":
         return amount
@@ -38,7 +53,6 @@ def get_amount_rub(transaction: dict[str, Any]) -> float:
 
             if not data.get("success", True):
                 error_info = data.get("error", {}).get("info", "Неизвестная ошибка API")
-
                 raise Exception(f"Ошибка в ответе API: {error_info}")
 
             if "rates" not in data or "RUB" not in data["rates"]:
@@ -48,7 +62,7 @@ def get_amount_rub(transaction: dict[str, Any]) -> float:
             return float(amount * rate)
 
         except requests.exceptions.RequestException as e:
-            raise Exception(f"Ошибка при запросе к API: {e}")
+            raise Exception(f"Ошибка при запросe к API: {e}")
         except ValueError as e:
             raise Exception(f"Ошибка при разборе JSON ответа: {e}")
 
