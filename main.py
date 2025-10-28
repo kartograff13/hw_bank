@@ -1,7 +1,6 @@
 import os
 import sys
 
-from src.decorators import log
 from src.financial_reader import read_financial_csv, read_financial_excel
 from src.processing import filter_by_state, sort_by_date
 from src.utils import load_transactions_file
@@ -12,7 +11,6 @@ sys.path.append(os.path.join(os.path.dirname(__file__), "src"))
 sys.path.append(os.path.join(os.path.dirname(__file__), "utils"))
 
 
-@log("logs/main.log")
 def main() -> None:
     """Основная функция программы для работы с банковскими транзакциями"""
 
@@ -23,7 +21,6 @@ def main() -> None:
     print("3. Получить информацию о транзакциях из XLSX-файла")
 
     file_choice = input().strip()
-    transactions = []
 
     if file_choice == "1":
         print("Для обработки выбран JSON-файл.")
