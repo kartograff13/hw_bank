@@ -99,8 +99,16 @@ def main() -> None:
     for transaction in filtered_transactions:
         date_str = get_date(transaction["date"]) if "date" in transaction else "Дата не указана"
         description = transaction.get("description", "Описание отсутствует")
-        from_account = mask_account_card(transaction["from"]) if "from" in transaction else None
-        to_account = mask_account_card(transaction["to"]) if "to" in transaction else None
+
+        if "from" in transaction and transaction["from"]:
+            from_account = mask_account_card(transaction["from"])
+        else:
+            from_account = "Неизвестный отправитель"
+
+        if "to" in transaction and transaction["to"]:
+            to_account = mask_account_card(transaction["to"])
+        else:
+            to_account = "Неизвестный получатель"
 
         amount_info = transaction.get("operationAmount", {})
         amount = amount_info.get("amount", "0")
