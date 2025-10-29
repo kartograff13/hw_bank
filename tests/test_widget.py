@@ -14,6 +14,13 @@ def valid_card_data() -> list[Tuple[str, str]]:
         ("Visa Classic 6831982476737658", "Visa Classic 6831 98** **** 7658"),
         ("Visa Platinum 8990922113665229", "Visa Platinum 8990 92** **** 5229"),
         ("Visa 1234567890123456", "Visa 1234 56** **** 3456"),
+        ("МИР 1234567890123456", "МИР 1234 56** **** 3456"),
+        ("Discover 1234567890123456", "Discover 1234 56** **** 3456"),
+        ("American Express 1234567890123456", "American Express 1234 56** **** 3456"),
+        ("мир 1234567890123456", "мир 1234 56** **** 3456"),
+        ("discover 1234567890123456", "discover 1234 56** **** 3456"),
+        ("american express 1234567890123456", "american express 1234 56** **** 3456"),
+        ("maestro 1596837868705199", "maestro 1596 83** **** 5199"),
     ]
 
 
@@ -23,6 +30,7 @@ def valid_account_data() -> list[Tuple[str, str]]:
     return [
         ("Счет 64686473678894779589", "Счет **9589"),
         ("Счет 12345678901234567890", "Счет **7890"),
+        ("счет 64686473678894779589", "счет **9589"),
     ]
 
 
@@ -30,19 +38,19 @@ def valid_account_data() -> list[Tuple[str, str]]:
 def invalid_data() -> list[Tuple[Any, str]]:
     """Данные для невалидных входных данных"""
     return [
-        (None, "Вы ввели не существующий номер карты либо счёта."),
-        ("", "Вы ввели не существующий номер карты либо счёта."),
-        ("   ", "Вы ввели не существующий номер карты либо счёта."),
-        ("Mastro 1596837868705199", "Вы ввели не существующий номер карты либо счёта."),
-        ("Maestro 15968378687051991", "Вы ввели не существующий номер карты либо счёта."),
-        ("Maestro 159683786870519", "Вы ввели не существующий номер карты либо счёта."),
-        ("Счет 6468647367889477958", "Вы ввели не существующий номер карты либо счёта."),
-        ("Счет 646864736788947795890", "Вы ввели не существующий номер карты либо счёта."),
-        ("MasterVisa 7i583OO7347267581", "Вы ввели не существующий номер карты либо счёта."),
-        ("Visa Classic 683198247673765", "Вы ввели не существующий номер карты либо счёта."),
-        ("{*jks/-+]123", "Вы ввели не существующий номер карты либо счёта."),
-        ("CardOnly", "Вы ввели не существующий номер карты либо счёта."),
-        ("1234567890123456", "Вы ввели не существующий номер карты либо счёта."),
+        (None, "Неизвестный отправитель"),
+        ("", "Неизвестный отправитель"),
+        ("   ", "Неизвестный отправитель"),
+        ("Mastro 1596837868705199", "Неизвестный отправитель"),
+        ("Maestro 15968378687051991", "Неизвестный отправитель"),
+        ("Maestro 159683786870519", "Неизвестный отправитель"),
+        ("Счет 6468647367889477958", "Неизвестный отправитель"),
+        ("Счет 646864736788947795890", "Неизвестный отправитель"),
+        ("MasterVisa 7i583OO7347267581", "Неизвестный отправитель"),
+        ("Visa Classic 683198247673765", "Неизвестный отправитель"),
+        ("{*jks/-+]123", "Неизвестный отправитель"),
+        ("CardOnly", "Неизвестный отправитель"),
+        ("1234567890123456", "Неизвестный отправитель"),
     ]
 
 
@@ -51,29 +59,29 @@ def edge_cases_data() -> list[Tuple[str, str]]:
     """Данные для граничных случаев"""
     return [
         ("  Maestro  1596837868705199  ", "Maestro 1596 83** **** 5199"),
-        ("счет 64686473678894779589", "Вы ввели не существующий номер карты либо счёта."),
+        ("  Счет  64686473678894779589  ", "Счет **9589"),
     ]
 
 
-def test_valid_cards(valid_card_data: list[Tuple[str, str]]) -> None:
+def test_mask_account_card_valid_cards(valid_card_data: list[Tuple[str, str]]) -> None:
     """Тест для валидных номеров карт"""
     for account_info, expected in valid_card_data:
         assert mask_account_card(account_info) == expected
 
 
-def test_valid_accounts(valid_account_data: list[Tuple[str, str]]) -> None:
+def test_mask_account_card_valid_accounts(valid_account_data: list[Tuple[str, str]]) -> None:
     """Тест для валидных номеров счетов"""
     for account_info, expected in valid_account_data:
         assert mask_account_card(account_info) == expected
 
 
-def test_invalid_data(invalid_data: list[Tuple[Any, str]]) -> None:
+def test_mask_account_card_invalid_data(invalid_data: list[Tuple[Any, str]]) -> None:
     """Тест для невалидных входных данных"""
     for account_info, expected in invalid_data:
         assert mask_account_card(account_info) == expected
 
 
-def test_edge_cases(edge_cases_data: list[Tuple[str, str]]) -> None:
+def test_mask_account_card_edge_cases(edge_cases_data: list[Tuple[str, str]]) -> None:
     """Тест для граничных случаев"""
     for account_info, expected in edge_cases_data:
         assert mask_account_card(account_info) == expected
@@ -103,13 +111,13 @@ def invalid_dates() -> list[Tuple[str, str]]:
     ]
 
 
-def test_valid_dates(valid_dates: list[Tuple[str, str]]) -> None:
+def test_get_date_valid_dates(valid_dates: list[Tuple[str, str]]) -> None:
     """Тест для валидных дат"""
     for date_str, expected in valid_dates:
         assert get_date(date_str) == expected
 
 
-def test_invalid_dates(invalid_dates: list[Tuple[str, str]]) -> None:
+def test_get_date_invalid_dates(invalid_dates: list[Tuple[str, str]]) -> None:
     """Тест для невалидных дат"""
     for date_str, expected in invalid_dates:
         assert get_date(date_str) == expected
