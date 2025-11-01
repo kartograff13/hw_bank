@@ -116,16 +116,21 @@ def main() -> None:
 
         print(f"{date_str} {description}")
 
-        if from_account and to_account:
-            print(f"{from_account} -> {to_account}")
-        elif from_account:
-            print(f"{from_account}")
-        elif to_account:
-            print(f"-> {to_account}")
+        deposit_keywords = ["открытие вклада", "вклад", "депозит", "deposit"]
+        is_deposit_operation = any(keyword in description.lower() for keyword in deposit_keywords)
+
+        if is_deposit_operation:
+            print(f"{to_account}")
+        else:
+            if from_account and to_account:
+                print(f"{from_account} -> {to_account}")
+            elif from_account:
+                print(f"{from_account}")
+            elif to_account:
+                print(f"-> {to_account}")
 
         print(f"Сумма: {amount} {currency}")
         print()
-
 
 if __name__ == "__main__":
     main()
